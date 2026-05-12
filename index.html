@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CivilAgent — Structural Workspace</title>
+    <meta name="description" content="CivilAgent is a deterministic structural engineering workspace." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/variables.css?v=4" />
+    <link rel="stylesheet" href="./css/reset.css?v=4" />
+    <link rel="stylesheet" href="./css/transitions.css?v=4" />
+    <link rel="stylesheet" href="./css/layout.css?v=4" />
+    <link rel="stylesheet" href="./css/components.css?v=4" />
+    <link rel="stylesheet" href="./css/canvas.css?v=4" />
+    <link rel="stylesheet" href="./css/pages.css?v=4" />
+    <link rel="stylesheet" href="./css/intake.css?v=4" />
+    <link rel="stylesheet" href="./css/optimization-anim.css?v=4" />
+    <link rel="stylesheet" href="./css/placement.css?v=4" />
+
+    <!--
+      That Open + Three import map.
+
+      web-ifc note: the package's `exports` field declares the Node entry
+      (web-ifc-api-node.js) under the "node" condition, which esm.sh
+      resolves to in its build environment.  That build does not run in
+      the browser ("not compiled for this environment" assertion).
+
+      The fix is to (a) externalize web-ifc and @thatopen/fragments from
+      the @thatopen/components shim so the bare specifiers reach the
+      browser, and (b) map web-ifc directly to the browser ESM entry
+      (`web-ifc-api.js`) on jsdelivr, which is paired with the same
+      version's .wasm files (loaded by ifc-source-loader.js via
+      WASM_PATH).  Both halves of web-ifc must be the SAME version, or
+      the JS wrapper's runtime checks against the WASM exports fail.
+    -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+          "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.webgpu.js",
+          "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.tsl.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/",
+          "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/",
+          "web-ifc": "https://cdn.jsdelivr.net/npm/web-ifc@0.0.77/web-ifc-api.js",
+          "@thatopen/fragments": "https://esm.sh/@thatopen/fragments@3.4.5?external=three,three/webgpu,three/tsl,web-ifc",
+          "@thatopen/components": "https://esm.sh/@thatopen/components@3.4.3?external=three,three/webgpu,three/tsl,web-ifc,@thatopen/fragments"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./js/main.js?v=4"></script>
+  </body>
+</html>

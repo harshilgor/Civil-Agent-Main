@@ -1,0 +1,692 @@
+/* =============================================================================
+   Intake chat system — all styles for the project intake flow
+   ============================================================================= */
+
+/* ── Command bar (upgraded) ─────────────────────────────────────────── */
+
+.intake-command-bar {
+  width: min(720px, 100%);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl);
+  background: var(--bg-surface);
+  padding: var(--space-md) var(--space-lg);
+  transition: border-color var(--t-base), background var(--t-base);
+}
+
+.intake-command-bar:hover,
+.intake-command-bar.is-focus {
+  border-color: var(--border-focus);
+}
+
+.intake-command-bar.is-dragover {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+.intake-command-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.intake-attach-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  transition: var(--t-base);
+  transition-property: background, color;
+}
+
+.intake-attach-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+}
+
+.intake-textarea {
+  flex: 1;
+  min-height: 28px;
+  max-height: 120px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  overflow-y: auto;
+}
+
+.intake-textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.intake-send-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--text-inverse);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: var(--t-base);
+  transition-property: opacity, transform, background;
+  pointer-events: none;
+}
+
+.intake-send-btn.is-visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.intake-send-btn:hover {
+  background: var(--accent-hover);
+}
+
+.intake-helper {
+  margin-top: 6px;
+  padding-left: 42px;
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+/* ── Quick-start chips ──────────────────────────────────────────────── */
+
+.quick-start-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  width: min(720px, 100%);
+  margin-top: var(--space-lg);
+}
+
+.quick-chip {
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--t-base);
+  transition-property: background, color, border-color;
+}
+
+.quick-chip:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+/* ── File cards ─────────────────────────────────────────────────────── */
+
+.intake-file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: min(720px, 100%);
+  margin-top: var(--space-md);
+}
+
+.intake-file-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  max-width: 320px;
+  animation: fade-in var(--t-base);
+}
+
+.intake-file-card.is-geometry {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.04), var(--bg-elevated));
+}
+
+.intake-file-ext {
+  display: inline-grid;
+  place-items: center;
+  height: 22px;
+  min-width: 36px;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.intake-file-card.is-geometry .intake-file-ext {
+  color: var(--accent);
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+.intake-file-info {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.intake-file-name {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.intake-file-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.intake-file-role {
+  color: var(--text-secondary);
+}
+
+.intake-file-parseability {
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.intake-file-parseability[data-p="parseable"] {
+  background: var(--status-pass-bg);
+  color: var(--status-pass);
+}
+
+.intake-file-parseability[data-p="experimental"] {
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
+}
+
+.intake-file-parseability[data-p="conditional"] {
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
+}
+
+.intake-file-parseability[data-p="reference_only"] {
+  background: var(--bg-active);
+  color: var(--text-tertiary);
+}
+
+.intake-file-warning {
+  margin-top: 2px;
+  color: var(--status-warn);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.intake-file-remove {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  transition: var(--t-fast);
+  transition-property: background, color;
+}
+
+.intake-file-remove:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+/* ── Chat thread ────────────────────────────────────────────────────── */
+
+.intake-chat-layout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+.intake-chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-xl) var(--space-xl) var(--space-md);
+  overflow-y: auto;
+  align-items: center;
+}
+
+.intake-msg {
+  width: min(720px, 100%);
+  animation: fade-in var(--t-base);
+}
+
+.intake-msg-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.intake-msg-user-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.intake-msg-user-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.intake-msg-assistant {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.intake-msg-text {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.intake-msg-text strong {
+  font-weight: 500;
+}
+
+/* ── Bottom command bar (in chat mode) ──────────────────────────────── */
+
+.intake-bottom-bar {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-md) var(--space-xl) var(--space-lg);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+}
+
+.intake-bottom-bar .intake-command-bar {
+  width: min(720px, 100%);
+}
+
+/* ── Question cards ─────────────────────────────────────────────────── */
+
+.intake-questions {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+}
+
+.intake-question {
+  display: grid;
+  gap: 8px;
+}
+
+.intake-question-label {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.intake-question-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.intake-option-btn {
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--t-base);
+  transition-property: background, color, border-color;
+}
+
+.intake-option-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.intake-option-btn.is-selected {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.intake-question-input {
+  width: 100%;
+  max-width: 400px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  outline: none;
+  transition: border-color var(--t-base);
+}
+
+.intake-question-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.intake-question-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.intake-submit-answers {
+  margin-top: var(--space-sm);
+}
+
+/* ── Plan card ──────────────────────────────────────────────────────── */
+
+.intake-plan {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  animation: fade-in var(--t-base);
+}
+
+.intake-plan-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-md);
+  font-weight: 500;
+}
+
+.intake-plan-section-label {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intake-plan-steps {
+  display: grid;
+  gap: 4px;
+  padding-left: 0;
+  margin: 0;
+  counter-reset: plan-step;
+  list-style: none;
+}
+
+.intake-plan-step {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.intake-plan-step::before {
+  counter-increment: plan-step;
+  content: counter(plan-step);
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.intake-plan-items {
+  display: grid;
+  gap: 3px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.intake-plan-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  padding: 2px 0;
+}
+
+.intake-plan-item::before {
+  content: "\2022";
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.intake-plan-warnings .intake-plan-item::before {
+  content: "\26A0";
+  color: var(--status-warn);
+}
+
+.intake-plan-cta {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+/* ── Progress timeline ──────────────────────────────────────────────── */
+
+.intake-progress {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-md) 0;
+}
+
+.intake-progress-step {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  position: relative;
+}
+
+.intake-progress-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 28px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--border-subtle);
+}
+
+.intake-progress-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  font-size: 10px;
+}
+
+.intake-progress-step[data-status="pending"] .intake-progress-icon {
+  color: var(--text-tertiary);
+}
+
+.intake-progress-step[data-status="running"] .intake-progress-icon {
+  border-color: var(--accent);
+  color: var(--accent);
+  animation: pulse-soft 1.4s ease infinite;
+}
+
+.intake-progress-step[data-status="done"] .intake-progress-icon {
+  background: var(--status-pass);
+  border-color: var(--status-pass);
+  color: #fff;
+}
+
+.intake-progress-step[data-status="failed"] .intake-progress-icon {
+  background: var(--status-fail-bg);
+  border-color: var(--status-fail);
+  color: var(--status-fail);
+}
+
+.intake-progress-label {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+}
+
+.intake-progress-step[data-status="running"] .intake-progress-label,
+.intake-progress-step[data-status="done"] .intake-progress-label {
+  color: var(--text-primary);
+}
+
+.intake-progress-detail {
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+}
+
+/* ── Completion card ────────────────────────────────────────────────── */
+
+.intake-completion {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  text-align: center;
+  animation: fade-in var(--t-base);
+}
+
+.intake-completion-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.intake-completion-sub {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.intake-completion-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+/* ── Transition helpers ─────────────────────────────────────────────── */
+
+.intake-home-body {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding: 8vh var(--space-xl) 0;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.intake-home-body.is-transitioned {
+  padding: 0;
+  overflow: hidden;
+}
+
+.intake-fade-out {
+  animation: fade-out 180ms ease forwards;
+  pointer-events: none;
+}
+
+/* ── Inline file card (inside chat messages) ────────────────────────── */
+
+.intake-inline-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-base);
+  font-size: var(--text-xs);
+}
+
+.intake-inline-file-ext {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.intake-inline-file-name {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Spinner for running state */
+@keyframes intake-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.intake-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--border-default);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: intake-spin 0.8s linear infinite;
+}
