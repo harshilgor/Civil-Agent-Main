@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import AsyncIterator
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from apps.api.core.config import get_settings
 from apps.api.core.logging_config import configure_logging, get_logger
@@ -123,7 +125,35 @@ def create_app() -> FastAPI:
             headers=cors_headers,
         )
 
+    _mount_spa_static(app)
+
     return app
+
+
+def _mount_spa_static(app: FastAPI) -> None:
+    """Serve the vanilla workspace (index.html, css/, js/) from the repo root.
+
+    Vercel runs this FastAPI app as the sole origin; without these routes ``/``
+    returns 404 and the UI never loads.
+    """
+    repo_root = Path(__file__).resolve().parent.parent.parent
+    index_path = repo_root / "index.html"
+    if not index_path.is_file():
+        return
+
+    @app.get("/", include_in_schema=False)
+    async def _spa_index() -> FileResponse:
+        return FileResponse(
+            index_path,
+            media_type="text/html; charset=utf-8",
+        )
+
+    css_dir = repo_root / "css"
+    if css_dir.is_dir():
+        app.mount("/css", StaticFiles(directory=str(css_dir)), name="spa_css")
+    js_dir = repo_root / "js"
+    if js_dir.is_dir():
+        app.mount("/js", StaticFiles(directory=str(js_dir)), name="spa_js")
 
 
 app = create_app()

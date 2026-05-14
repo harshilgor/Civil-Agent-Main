@@ -4,9 +4,9 @@
  * Wires together three concerns the rest of the frontend wants to ignore:
  *
  *   1. **Base URL.**  Read from `window.CIVILAGENT_API_URL` if the host
- *      app sets it, otherwise default to `http://localhost:8000` for the
- *      docker-compose dev environment. WebSocket base is derived by
- *      swapping http(s)→ws(s).
+ *      app sets it. On localhost, default to `http://localhost:8000` (Docker).
+ *      On any other host (e.g. Vercel), default to `window.location.origin`
+ *      so the UI talks to the same FastAPI deployment.
  *
  *   2. **Authentication.**  In dev we use the API's `AUTH_DEV_BYPASS=true`
  *      escape hatch with `X-Dev-User` and `X-Dev-Org` headers. Both can
@@ -29,6 +29,15 @@ const STORAGE_KEY_USER = "civilagent.devUser";
 const STORAGE_KEY_ORG = "civilagent.devOrg";
 
 const DEFAULT_API_BASE = "http://localhost:8000";
+
+/** When the UI is served from the same host as the API (e.g. Vercel), use same-origin. */
+function resolveApiBase() {
+  if (typeof window === "undefined") return DEFAULT_API_BASE;
+  if (window.CIVILAGENT_API_URL) return window.CIVILAGENT_API_URL;
+  const host = window.location.hostname;
+  if (host === "localhost" || host === "127.0.0.1") return DEFAULT_API_BASE;
+  return window.location.origin;
+}
 
 const NAMESPACE_UUID = "11111111-1111-4111-9111-111111111111";
 
@@ -56,8 +65,7 @@ function readStored(key, fallbackFactory) {
   }
 }
 
-export const API_BASE =
-  (typeof window !== "undefined" && window.CIVILAGENT_API_URL) || DEFAULT_API_BASE;
+export const API_BASE = resolveApiBase();
 
 export const WS_BASE = API_BASE.replace(/^http/i, (m) =>
   m.toLowerCase() === "https" ? "wss" : "ws",
