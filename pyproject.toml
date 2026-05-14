@@ -54,6 +54,11 @@ dev = [
 where = ["."]
 include = ["apps*", "packages*"]
 
+# Vercel FastAPI: app is not at api/main.py — point the builder at the real module.
+# https://vercel.com/docs/frameworks/backend/fastapi#exporting-the-fastapi-application
+[tool.vercel]
+entrypoint = "apps.api.main:app"
+
 [tool.ruff]
 line-length = 110
 target-version = "py311"
